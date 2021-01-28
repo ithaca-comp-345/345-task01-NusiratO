@@ -40,7 +40,60 @@ public class BankAccount {
 
 
     public static boolean isEmailValid(String email){
+        
         if (email.indexOf('@') == -1){
+            return false;
+        }
+        if (email.chars().filter(ch -> ch == "@".charAt(0)).count() !=1){
+            return false;
+        }
+        else if (email.indexOf('.') == -1){
+            return false;
+        }
+
+        String[] invalidChar = {"!","#","$","&"};
+        int count = 0;
+        for (int i = 0; i < invalidChar.length; i++){
+            String current = invalidChar[i];
+            count += email.chars().filter(ch -> ch == current.charAt(0)).count();
+            if (count > 0){
+                return false;
+            }
+        }
+
+        String[] parts = email.split("@", 2);
+        
+        long countdash = parts[0].chars().filter(ch -> ch == '-').count();
+        long countperiod = parts[0].chars().filter(ch -> ch == '.').count();
+        long countunderscore = parts[0].chars().filter(ch -> ch == '_').count();
+        
+        if (countdash+countperiod+countunderscore > 1){
+            return false;
+        }
+        else if (parts[0].indexOf('.') == 0){
+            return false;
+        }
+        else if (parts[0].indexOf('-') == 0){
+            return false;
+        }
+        else if (parts[0].indexOf('_') == 0){
+            return false;
+        }
+        else if (parts[0].indexOf('.') == parts[0].length()-1){
+            return false;
+        }
+        else if (parts[0].indexOf('-') == parts[0].length()-1){
+            return false;
+        }
+        else if (parts[0].indexOf('_') == parts[0].length()-1){
+            return false;
+        }
+        
+        if (parts[1].chars().filter(ch -> ch == '.').count() != 1){
+            return false;
+        }
+        String[] subparts = parts[1].split(".", 2);
+        if (subparts[1].length() <= 2){
             return false;
         }
         else {

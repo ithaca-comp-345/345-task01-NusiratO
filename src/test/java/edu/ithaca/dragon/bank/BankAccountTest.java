@@ -24,47 +24,27 @@ class BankAccountTest {
 
     @Test
     void isEmailValidTest(){
-        /*
-        * The first 3 line equivalence class belongs to the nominal value
-        * however, I'm not entirely sure if that's correct because I'm still having 
-        * trouble understanding the concept of equvalence class and it's classes. I want
-        * to say it's not a border case for the first 3 but all the tests combine is a border case.
-        * however again, I'm not sure. Any equivalence cases or border cases I miss would be
-        * overly used special characters after the at symbol. 
-        */
-        assertTrue(BankAccount.isEmailValid( "a@b.com"));
-        assertTrue(BankAccount.isEmailValid("2@c.com"));
-        assertTrue(BankAccount.isEmailValid("2@c.edu"));
-        /*
-        * it's equivalence class belongs to minimum
-        */
-        assertFalse(BankAccount.isEmailValid(""));
-        /*
-        * It's equivalence class belongs to just above the minimum
-        */
-        assertFalse(BankAccount.isEmailValid("a.com"));
-        assertFalse(BankAccount.isEmailValid("a@b"));
+        assertTrue(BankAccount.isEmailValid( "a@b.com")); //boundary, username and domain name must be at least one character
+        assertTrue(BankAccount.isEmailValid("2@c.com")); // same as above
+        assertTrue(BankAccount.isEmailValid("2@c.edu")); // ...
+        assertFalse(BankAccount.isEmailValid("")); // boundary, needs @ .
+        assertFalse(BankAccount.isEmailValid("a.com")); // boundary, missing @
+        assertFalse(BankAccount.isEmailValid("a@b")); // boundary, missing .
         assertFalse(BankAccount.isEmailValid("abc"));
 
-        /*
-        * It's equivvalence class belongs to just below the maximum
-        */ 
-        assertTrue(BankAccount.isEmailValid("a_b@c.com"));
-        assertTrue(BankAccount.isEmailValid("a-b@c.com"));
-        /*
-        * It's equivvalence class belongs to Maximum
-        */ 
-        assertTrue(BankAccount.isEmailValid("ab.de@c.com"));
-        assertFalse(BankAccount.isEmailValid("ab-@c.com"));
-        assertFalse(BankAccount.isEmailValid("a..b@c.com"));
-        assertFalse(BankAccount.isEmailValid("ab#c@c.com"));
-        assertFalse(BankAccount.isEmailValid(".ab@c.com"));
+        assertTrue(BankAccount.isEmailValid("a_b@c.com")); // boundary, _-. must be surrounded by letter or number
+        assertTrue(BankAccount.isEmailValid("a-b@c.com")); // same as above
+        assertTrue(BankAccount.isEmailValid("ab.de@c.com")); //equivalence, now . surrounded by several other characters
+        assertFalse(BankAccount.isEmailValid("ab-@c.com")); //equivalence, any username ending with - not allowed
+        assertFalse(BankAccount.isEmailValid("a..b@c.com")); // equivalence, no .-_ should be next to one another
+        assertFalse(BankAccount.isEmailValid("ab#c@c.com")); // equivalence, no special characters other than .-_ needed
+        assertFalse(BankAccount.isEmailValid(".ab@c.com")); //equivalence, .-_ now allowed at beginning of username
 
-        assertTrue(BankAccount.isEmailValid("ab.d@c.cc"));
-        assertTrue(BankAccount.isEmailValid("ab.d@c-e.com"));
-        assertFalse(BankAccount.isEmailValid("ab.d@c.c"));
-        assertFalse(BankAccount.isEmailValid("ab.d@c#dance.com"));
-        assertFalse(BankAccount.isEmailValid("ab@c..com"));   
+        assertTrue(BankAccount.isEmailValid("ab.d@c.cc")); //boundary case 2 characters or more after period
+        assertTrue(BankAccount.isEmailValid("ab.d@c-e.com")); //equivalence case, - . _ are allowed so long as they are in between two letters or numbers
+        assertFalse(BankAccount.isEmailValid("ab.d@c.c")); //boundary case for same reason as previous boundary case
+        assertFalse(BankAccount.isEmailValid("ab.d@c#dance.com")); //equivalence case, no special characters other than periods, underscores, dashes allowed
+        assertFalse(BankAccount.isEmailValid("ab@c..com"));   //equivalence case, no special characters next to each other
     }
 
     @Test

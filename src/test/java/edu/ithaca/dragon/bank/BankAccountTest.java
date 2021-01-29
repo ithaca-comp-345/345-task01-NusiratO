@@ -45,6 +45,11 @@ class BankAccountTest {
         assertFalse(BankAccount.isEmailValid("ab.d@c.c")); //boundary case for same reason as previous boundary case
         assertFalse(BankAccount.isEmailValid("ab.d@c#dance.com")); //equivalence case, no special characters other than periods, underscores, dashes allowed
         assertFalse(BankAccount.isEmailValid("ab@c..com"));   //equivalence case, no special characters next to each other
+
+        //It's boundary case should allow it to multiple of the same special characters before the @ symbol
+        assertTrue(BankAccount.isEmailValid("a-b-c@c.cc"));
+        //It must have characters between special characters as a boundary case
+        assertFalse(BankAccount.isEmailValid("a--b@-c.cc"));
     }
 
     @Test

@@ -63,14 +63,35 @@ public class BankAccount {
 
         String[] parts = email.split("@", 2);
         
-        long countdash = parts[0].chars().filter(ch -> ch == '-').count();
-        long countperiod = parts[0].chars().filter(ch -> ch == '.').count();
-        long countunderscore = parts[0].chars().filter(ch -> ch == '_').count();
         
-        if (countdash+countperiod+countunderscore > 1){
-            return false;
+
+        System.out.println("");
+        System.out.println("Starting");
+        boolean specialMatch = false;
+        for (int i = 0; i < parts[0].length(); i++){
+            if (specialMatch == false){
+                if (parts[0].charAt(i) == '-' || parts[0].charAt(i) =='_' || parts[0].charAt(i) =='.'){
+                    specialMatch = true;
+                }
+                else{
+                    specialMatch = false;
+                }
+            }
+            else if (specialMatch == true){
+                if (parts[0].charAt(i) == '-' || parts[0].charAt(i) == '_' || parts[0].charAt(i) == '.'){
+                    return false;
+                }
+                else{
+                    specialMatch = false;
+                }
+            }
+            System.out.print(specialMatch);
         }
-        else if (parts[0].indexOf('.') == 0){
+
+        
+
+
+        if (parts[0].indexOf('.') == 0){
             return false;
         }
         else if (parts[0].indexOf('-') == 0){

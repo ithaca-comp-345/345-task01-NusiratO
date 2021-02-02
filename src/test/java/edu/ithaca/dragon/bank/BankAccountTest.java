@@ -18,15 +18,15 @@ class BankAccountTest {
         BankAccount bankAccount = new BankAccount("a@b.com", 200);
         bankAccount.withdraw(100);
 
-        assertEquals(100, bankAccount.getBalance());
+        assertEquals(100, bankAccount.getBalance()); //It's equivalence case is that it's balance must be less than the account
         assertThrows(InsufficientFundsException.class, () -> bankAccount.withdraw(300));
 
         BankAccount bankAccount2 = new BankAccount("a@c.com", 500);
         bankAccount2.withdraw(100);
         assertEquals(400, bankAccount2.getBalance());
-        assertThrows(InsufficientFundsException.class, () -> bankAccount2.withdraw(-100));
-        bankAccount2.withdraw(0);
-        assertEquals(400, bankAccount2);
+        assertThrows(InsufficientFundsException.class, () -> bankAccount2.withdraw(-100)); //The border case is minimum, where the amount can't be in the negatives
+        bankAccount2.withdraw(0); //This border case is nominal value or just above the minimum where the amount can be 0 because it's less than the amount but also not in the negatives
+        assertEquals(400, bankAccount2.getBalance());
         bankAccount2.withdraw(400);
         assertEquals(0, bankAccount2.getBalance());
     }
@@ -36,10 +36,10 @@ class BankAccountTest {
         assertTrue(BankAccount.isEmailValid( "a@b.com")); //boundary, username and domain name must be at least one character
         assertTrue(BankAccount.isEmailValid("2@c.com")); // same as above
         assertTrue(BankAccount.isEmailValid("2@c.edu")); // ...
-        assertFalse(BankAccount.isEmailValid("")); // boundary, needs @ .
+        assertFalse(BankAccount.isEmailValid("")); // boundary, needs @ ., empty case
         assertFalse(BankAccount.isEmailValid("a.com")); // boundary, missing @
         assertFalse(BankAccount.isEmailValid("a@b")); // boundary, missing .
-        assertFalse(BankAccount.isEmailValid("abc"));
+        assertFalse(BankAccount.isEmailValid("abc")); //needs @ and . 
 
         assertTrue(BankAccount.isEmailValid("a_b@c.com")); // boundary, _-. must be surrounded by letter or number
         assertTrue(BankAccount.isEmailValid("a-b@c.com")); // same as above

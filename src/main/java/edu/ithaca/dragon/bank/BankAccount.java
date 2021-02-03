@@ -129,6 +129,26 @@ public class BankAccount {
      * @return true if the amount is positive and has two decimal points or less, false otherwise
      */
     public static boolean isAmountValid(double amount){
-        return false;        
+        String amountText = String.valueOf(amount);
+        String[] splitText = amountText.split("\\.");
+        if(splitText[splitText.length - 1].length() > 2){
+            return false;
+        }
+        else if(splitText[splitText.length - 1].length() < 0){
+            return false;
+        }
+        
+        if (amount < 0){
+            return false;
+        }
+        else if (amount == 0){
+            return true;
+        }
+        if (amount*100 < 1){
+            return false;
+        }
+        else{
+            return true;
+        }        
     }
 }

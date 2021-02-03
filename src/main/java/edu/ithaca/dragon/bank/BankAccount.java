@@ -124,4 +124,11 @@ public class BankAccount {
             return true;
         }
     }
+
+    /**
+     * @return true if the amount is positive and has two decimal points or less, false otherwise
+     */
+    public static boolean isAmountValid(double amount){
+        return false;        
+    }
 }

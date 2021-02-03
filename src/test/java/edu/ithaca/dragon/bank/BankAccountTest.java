@@ -75,6 +75,25 @@ class BankAccountTest {
         assertThrows(IllegalArgumentException.class, ()-> new BankAccount("", 100));
     }
 
+    @Test
+    void isAmountValidTest(){
+        assertTrue(BankAccount.isAmountValid(200.50)); //It's equivalence class must be bigger than zero and must have 2 decimal place
+        assertTrue(BankAccount.isAmountValid(200.00)); //It's equivalence class cent can be zero as it's not in the negative.
+        assertFalse(BankAccount.isAmountValid(200)); //It's border case is just below the maximum, where it's missing cents
+        assertFalse(BankAccount.isAmountValid(-200.50)); //It's border case is just above the minimum, where the amount needs to be greater than 0
+        assertFalse(BankAccount.isAmountValid(-200)); //It's border case is minimum because it's missing cents. 
+
+        assertTrue(BankAccount.isAmountValid(0.00)); //It's border case is nominal, where it's equivalence class allows the amount to be zero since it's not negative and have cents
+        assertFalse(BankAccount.isAmountValid(0)); //It's border case is just above the minimum because it's missing cents though the amount is not negative
+        assertTrue(BankAccount.isAmountValid(0.1)); //It's border case is just above the minimum where it's equivalence class allows the cent to be 1 decimal since the cent is no more than 3 decimal place
+        assertTrue(BankAccount.isAmountValid(0.01)); //It's border case is nominal because the cents is not greater than 2 decimal 
+        assertFalse(BankAccount.isAmountValid(0.001)); //It's border case is maximum because cent is greater than 2 deminal cents
+        assertFalse(BankAccount.isAmountValid(-0.01)); //It's border case is just aboe the minimum because the amount can't be negative
+
+
+
+    }
+
 
 
 }

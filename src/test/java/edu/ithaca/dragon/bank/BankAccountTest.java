@@ -101,7 +101,7 @@ class BankAccountTest {
     }
 
     @Test
-    void DepositTest(){
+    void depositTest(){
         BankAccount bankAccount = new BankAccount("a@b.com", 400);
 
         bankAccount.deposit(100);
@@ -118,6 +118,35 @@ class BankAccountTest {
         assertThrows(IllegalArgumentException.class, ()-> bankAccount.deposit(-0.01)); // It's border case is minimum because the amount is negative though the cents is under 2 decimal
 
 
+    }
+
+    @Test 
+    void transferTest(){
+        BankAccount currentBankAccount = new BankAccount("a@b.com", 300);
+        BankAccount newBankAccount = new BankAccount("c@d.com", 300);
+
+        BankAccount.transfer(100, currentBankAccount, newBankAccount); //It's equivalence class is taking out a positive amount from one account and depositing it into another account
+        assertEquals(200, currentBankAccount.getBalance());
+        assertEquals(400, newBankAccount.getBalance());
+
+        assertThrows(InsufficientFundsException.class, ()-> BankAccount.transfer(300, currentBankAccount, newBankAccount)); //It's border case is just above minimum, where the amount cannot be greater than the balance in the account
+        assertThrows(IllegalArgumentException.class, ()-> BankAccount.transfer(-200, currentBankAccount, newBankAccount)); //It's border case is minimum as it's amount can't be in the negatives
+        assertThrows(IllegalArgumentException.class, ()-> BankAccount.transfer(0.001, currentBankAccount, newBankAccount)); //It's border case os just above maximum when the cents can't be greater than 2 decimals 
+
+        //It's border case is just above maximum because the cent's is not over 2 decimal points
+        BankAccount.transfer(0.01, currentBankAccount, newBankAccount);
+        assertEquals(199.99, currentBankAccount.getBalance());
+        assertEquals(400.01, newBankAccount.getBalance());
+
+        //It's border case is nominal, where it's amount is not negative and it's cent is not oevr 2 decimal points
+        BankAccount.transfer(100.10, currentBankAccount, newBankAccount);
+        assertEquals(99.89, currentBankAccount.getBalance());
+        assertEquals(500.11, newBankAccount.getBalance());
+
+        //It's equivalence class should be able to transfer amount to either account to either account
+        BankAccount.transfer(100.10, newBankAccount, currentBankAccount);
+        assertEquals(400.01, newBankAccount);
+        assertEquals(199.99, currentBankAccount);
     }
 
 

@@ -165,4 +165,16 @@ public class BankAccount {
             balance += amount;
         }
     }
+
+    /**
+     * @post Must withdraw the amount from one account to another account 
+     * @param amount it's being transfer
+     * @param currentBankAccount that's taking the amount out from
+     * @param newBankAccount that's putting the amount in
+     * Should throw an argument if amount is negative and it's oer 2 decimal
+     * Should throw an argument if the amount is greater than the account it's taking the amount from
+     */
+    public static void transfer(double amount, BankAccount currentBankAccount, BankAccount newBankAccount){
+        
+    }
 }

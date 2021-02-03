@@ -100,6 +100,26 @@ class BankAccountTest {
 
     }
 
+    @Test
+    void DepositTest(){
+        BankAccount bankAccount = new BankAccount("a@b.com", 400);
+
+        bankAccount.deposit(100);
+        assertEquals(500, bankAccount.getBalance()); //It's equivalence class is that the amount must be positive 
+        bankAccount.deposit(100.50);
+        assertEquals(600.50, bankAccount.getBalance()); //It's border case is just above minimum as it's cent is 2 decimals 
+        bankAccount.deposit(0);
+        assertEquals(600.50, bankAccount.getBalance()); //It's border case is just above minimum since the amount is not negative and there's no cents
+        bankAccount.deposit(0.1);
+        assertEquals(600.61, bankAccount.getBalance()); //It's border case is minimum since the amount is not negative and its cent is less than 2 decimal away
+
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount.deposit(-100)); //It's equivalence class is that it can't depsoit negative amount
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount.deposit(0.001)); //It's border case is minimum because it's cent is greater than 2 decimal
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount.deposit(-0.01)); // It's border case is minimum because the amount is negative though the cents is under 2 decimal
+
+
+    }
+
 
 
 }

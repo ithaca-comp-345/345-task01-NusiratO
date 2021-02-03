@@ -151,4 +151,12 @@ public class BankAccount {
             return true;
         }        
     }
+
+    /**
+     * @post Must increase the balance by the current amount
+     * @param amount it's being deposited
+     * Should throw an argument if the amount is negative and it's over 2 decimal points
+     */
+    public void deposit(double amount){
+    }
 }

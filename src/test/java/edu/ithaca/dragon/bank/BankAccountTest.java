@@ -28,14 +28,14 @@ class BankAccountTest {
         BankAccount bankAccount2 = new BankAccount("a@c.com", 500);
         bankAccount2.withdraw(100);
         assertEquals(400, bankAccount2.getBalance());
-        assertThrows(InsufficientFundsException.class, () -> bankAccount2.withdraw(-100)); //The border case is minimum, where the amount can't be in the negatives
+        assertThrows(IllegalArgumentException.class, () -> bankAccount2.withdraw(-100)); //The border case is minimum, where the amount can't be in the negatives
         bankAccount2.withdraw(0); //This border case is nominal value or just above the minimum where the amount can be 0 because it's less than the amount but also not in the negatives
         assertEquals(400, bankAccount2.getBalance());
         bankAccount2.withdraw(400);
         assertEquals(0, bankAccount2.getBalance());
 
-        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("a@b.com", -100));
-        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("a@b.com", 100.001));
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount.withdraw(-100));
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount.withdraw(100.001));
 
     }
 

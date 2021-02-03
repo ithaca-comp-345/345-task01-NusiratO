@@ -9,7 +9,7 @@ public class BankAccount {
      * @throws IllegalArgumentException if email is invalid
      */
     public BankAccount(String email, double startingBalance){
-        if (isEmailValid(email)){
+        if (isEmailValid(email) && isAmountValid(startingBalance)){
             this.email = email;
             this.balance = startingBalance;
         }
@@ -30,8 +30,8 @@ public class BankAccount {
      * @post reduces the balance by amount if amount is non-negative and smaller than balance
      */
     public void withdraw (double amount) throws InsufficientFundsException{
-        if (amount < 0){
-            throw new InsufficientFundsException("Amount is negative");
+        if (!(isAmountValid(amount))){
+            throw new IllegalArgumentException("Amount is negative or cents is more than 2 decimal points");
         }
         else if (amount <= balance){
             balance -= amount;
@@ -137,7 +137,7 @@ public class BankAccount {
         else if(splitText[splitText.length - 1].length() < 0){
             return false;
         }
-        
+
         if (amount < 0){
             return false;
         }

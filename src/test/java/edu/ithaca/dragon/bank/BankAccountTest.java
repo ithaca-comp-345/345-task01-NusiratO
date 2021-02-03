@@ -121,7 +121,7 @@ class BankAccountTest {
     }
 
     @Test 
-    void transferTest(){
+    void transferTest() throws InsufficientFundsException {
         BankAccount currentBankAccount = new BankAccount("a@b.com", 300);
         BankAccount newBankAccount = new BankAccount("c@d.com", 300);
 
@@ -139,14 +139,16 @@ class BankAccountTest {
         assertEquals(400.01, newBankAccount.getBalance());
 
         //It's border case is nominal, where it's amount is not negative and it's cent is not oevr 2 decimal points
-        BankAccount.transfer(100.10, currentBankAccount, newBankAccount);
-        assertEquals(99.89, currentBankAccount.getBalance());
-        assertEquals(500.11, newBankAccount.getBalance());
+        BankAccount.transfer(100.01, currentBankAccount, newBankAccount);
+        assertEquals(99.98, currentBankAccount.getBalance());
+        assertEquals(500.02, newBankAccount.getBalance());
 
+
+        
         //It's equivalence class should be able to transfer amount to either account to either account
-        BankAccount.transfer(100.10, newBankAccount, currentBankAccount);
-        assertEquals(400.01, newBankAccount);
-        assertEquals(199.99, currentBankAccount);
+        BankAccount.transfer(100.01, newBankAccount, currentBankAccount);
+        assertEquals(400.01, newBankAccount.getBalance());
+        assertEquals(199.99, currentBankAccount.getBalance());
     }
 
 

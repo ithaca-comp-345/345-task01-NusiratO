@@ -1,5 +1,6 @@
 package edu.ithaca.dragon.bank;
 
+
 public class BankAccount {
 
     private String email;
@@ -162,19 +163,32 @@ public class BankAccount {
             throw new IllegalArgumentException("The amount is negative and/or the cents is greater than 2 decimal");
         }
         else{
+            
             balance += amount;
         }
     }
 
     /**
-     * @post Must withdraw the amount from one account to another account 
-     * @param amount it's being transfer
+     * @post Must withdraw the amount from one account to another account
+     * @param amount             it's being transfer
      * @param currentBankAccount that's taking the amount out from
-     * @param newBankAccount that's putting the amount in
-     * Should throw an argument if amount is negative and it's oer 2 decimal
-     * Should throw an argument if the amount is greater than the account it's taking the amount from
+     * @param newBankAccount     that's putting the amount in Should throw an
+     *                           argument if amount is negative and it's oer 2
+     *                           decimal Should throw an argument if the amount is
+     *                           greater than the account it's taking the amount
+     *                           from
+     * @throws InsufficientFundsException if amount is greater than the current account
      */
-    public static void transfer(double amount, BankAccount currentBankAccount, BankAccount newBankAccount){
-        
+    public static void transfer(double amount, BankAccount currentBankAccount, BankAccount newBankAccount) throws InsufficientFundsException {
+        if(!(isAmountValid(amount))){
+            throw new IllegalArgumentException("The amount is negative and/or the cents is greater than 2 deciaml");
+        }
+        else if(amount > currentBankAccount.getBalance()){
+            throw new InsufficientFundsException("Not enough money");
+        }
+        else{
+            currentBankAccount.withdraw(amount);
+            newBankAccount.deposit(amount);
+        }
     }
 }

@@ -158,5 +158,11 @@ public class BankAccount {
      * Should throw an argument if the amount is negative and it's over 2 decimal points
      */
     public void deposit(double amount){
+        if(!(isAmountValid(amount))){
+            throw new IllegalArgumentException("The amount is negative and/or the cents is greater than 2 decimal");
+        }
+        else{
+            balance += amount;
+        }
     }
 }

@@ -2,7 +2,7 @@ package edu.ithaca.dragon.bank;
 
 public class TicketHandler {
     private Customer quantity;
-    private Customer colorPass;
+    private String cusColorPass;
     private Customer braceletID;
     private double totalPrice;
 
@@ -11,7 +11,10 @@ public class TicketHandler {
     }
 
     public void membershipPass(String billingAddress){
-
+        totalPrice = (5.99 + 5.99 * (4.00)) * (quantity.getNumOfTickets());
+        totalPrice = Math.round(totalPrice * 100.0) / 100.0;
+        cusColorPass = "Gold";
+    
     }
 
     public void allDayPass(){
@@ -36,5 +39,9 @@ public class TicketHandler {
 
     public double getTotalPrice() {
         return totalPrice;
+    }
+
+    public String getCusColorPass(){
+        return cusColorPass;
     }
 }
